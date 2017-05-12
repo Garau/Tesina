@@ -1,0 +1,56 @@
+#h1, #small{
+	color: white;
+}
+
+.custom{
+
+}
+
+.input-group-addon {
+    min-width: 120px; /* if you want width please write here */
+    text-align: center;
+}
+
+/*
+.navbar-default {
+    background-color: #00004d;
+    border-color: #000;
+    background-image: url("sea.jpg");*/
+}
+/*
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: #fff;
+    color: #FFC0CB;
+}
+*/
+.page-header{
+	border-color: #fff; /* cambia la barra sotto la scritta */
+}
+
+.logo{
+	color: #000;
+}
+
+.small_logo{
+	color: #1a1a1a;
+}
+
+body{
+	/*background-color: #cc0000;*/
+	background-image: url("bck.jpg");
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.image{
+    position:relative;
+    overflow:hidden;
+    padding-bottom:100%;
+    padding-right: 100%;
+}
+
+.image img{
+      position: absolute;
+      max-width: 200px;
+      max-height: 200px;
+}
