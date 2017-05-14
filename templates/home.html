@@ -1,109 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Bootstrap 101 Template</title>
-    <!-- Bootstrap -->
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../static/style.css">
-</head>
-<body>
-    <div class="">
-        <div class="page-header col-sm-10 col-sm-offset-1">
-            <div class="logo col-sm-8">
-                <h1 id="h1"> 
-                    Logo del sito 
-                    <small class="small_logo" id="small"> 
-                        sotto logo 
-                    </small>
-                </h1>
-            </div>
-            <form class="input-group-sm col-sm-offset-10">
-                <button type="button" class="btn btn-default">sign in</button>
-                <button type="submit" class="btn btn-default">sign up</button>   <!-- col-sm-offset-4 per spostarlo -->
-            </form>
-        </div>
-    </div>
-    <div class="col-sm-10 col-sm-offset-1">
-        <nav class="navbar navbar-default bg-default">
-            <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">&nbsp Reviews &nbsp&nbsp&nbsp</a>
-                    <a class="navbar-brand" href="#">Charts &nbsp&nbsp&nbsp</a>
-                    <a class="navbar-brand" href="#">Genres &nbsp&nbsp&nbsp</a>
-                    <a class="navbar-brand" href="#">Profile</a>
-                </div>
-            </div><!-- /.container-fluid -->
-        </nav>
-<!--
-        <div class="col-sm-12"> 
-            <div class="image">
-                <img src="sea.jpg" class="img img-responsive full-width" />
-            </div>
-        </div>
--->     
+{% extends "base.html" %}
 
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h1>Basic panel example</h1>
-                <div class="row">
-                    <div class="col-xs-6 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img src="../static/electric_sea.jpg" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-6 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img src="../static/ok_computer.jpg" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-6 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img src="../static/in_the_aeroplane_over_the_sea.jpg" alt="...">
-                        </a>
-                    </div>
-                    <div class="col-xs-6 col-md-3">
-                        <a href="#" class="thumbnail">
-                            <img src="../static/scenes_from_a_memory.jpg" alt="...">
-                        </a>
-                    </div>
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h1 align="center">Basic panel example</h1>
+            <div class="row">
+                <div class="col-xs-6 col-md-3">
+                    <a href="#" class="thumbnail">
+                        <img src="{{ image[0] }}" alt="...">
+                    </a>
                 </div>
-            </div>
-        </div>
-
-        <div class="panel panel-default col-sm-4">
-            <div class="panel-body">
-                <h1>TITLE</h1>
-                lorem ipsum <br> dolor sit amet <br> consectetur adipiscing elit <br> sed do eiusmod <br> tempor incididunt ut labore <br> et dolore magna aliqua
-            </div>
-        </div>
-        <div class="panel panel-default col-sm-3 col-sm-offset-1">
-            <div class="panel-body">
-                <h1>TITLE</h1>
-                lorem ipsum <br> dolor sit amet <br> consectetur adipiscing elit <br> sed do eiusmod <br> tempor incididunt ut labore <br> et dolore magna aliqua
-            </div>
-        </div>
-        <div class="panel panel-default col-sm-3 col-sm-offset-1">
-            <div class="panel-body">
-                <h1>TITLE</h1>
-                lorem ipsum <br> dolor sit amet <br> consectetur adipiscing elit <br> sed do eiusmod <br> tempor incididunt ut labore <br> et dolore magna aliqua
+                <div class="col-xs-6 col-md-3">
+                    <a href="#" class="thumbnail">
+                        <img src="{{ image[1] }}" alt="...">
+                    </a>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <a href="#" class="thumbnail">
+                        <img src="{{ image[2] }}" alt="...">
+                    </a>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <a href="#" class="thumbnail">
+                        <img src="{{ image[3] }}" alt="...">
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="js/bootstrap.min.js"></script>
-</body>
-</html>
+    <div class="panel panel-default col-sm-4">
+        <div class="panel-body">
+            <h1>TITLE</h1>
+            lorem ipsum <br> dolor sit amet <br> consectetur adipiscing elit <br> sed do eiusmod <br> tempor incididunt ut labore <br> et dolore magna aliqua
+        </div>
+    </div>
+    <div class="panel panel-default col-sm-3 col-sm-offset-1">
+        <div class="panel-body">
+            <h1>TITLE</h1>
+            lorem ipsum <br> dolor sit amet <br> consectetur adipiscing elit <br> sed do eiusmod <br> tempor incididunt ut labore <br> et dolore magna aliqua
+        </div>
+    </div>
+    <div class="panel panel-default col-sm-3 col-sm-offset-1">
+        <div class="panel-body">
+            <h1>TITLE</h1>
+            lorem ipsum <br> dolor sit amet <br> consectetur adipiscing elit <br> sed do eiusmod <br> tempor incididunt ut labore <br> et dolore magna aliqua
+        </div>
+    </div>
+{% endblock %}

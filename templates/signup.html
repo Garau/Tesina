@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="panel panel-default col-sm-4 col-sm-offset-4">
+	  	<div class="panel-body">
+	    	<form>
+			  	<div class="form-group">
+				    <label for="username">Username</label>
+				    <input type="text" class="form-control" id="username" placeholder="Username">
+			  	</div>
+			  	<div class="form-group">
+				    <label for="first_name">First name</label>
+				    <input type="text" class="form-control" id="first_name" placeholder="First name">
+			  	</div>
+			  	<div class="form-group">
+				    <label for="second_name">Second name</label>
+				    <input type="text" class="form-control" id="second_name" placeholder="Second name">
+			  	</div>
+			  	<div class="form-group">
+				    <label for="password">Password</label>
+				    <input type="password" class="form-control" id="password" placeholder="Password">
+			  	</div>
+			  	<div class="form-group">
+			  		<label for="confirm_password">Confirm password</label>
+				    <input type="password" class="form-control" id="confirm_password" placeholder="Confirm password">
+			  	</div>
+			  	<div class="form-group">
+				    <label for="email">Email</label>
+				    <input type="email" class="form-control" id="email" placeholder="Email">
+			  	</div>
+			  	<div class="form-group">
+				    <label for="confirm_email">Confirm email</label>
+				    <input type="email" class="form-control" id="confirm_email" placeholder="Confirm email">
+			  	</div>
+			  	<div style="height: 10px;"></div>
+			  	<button type="submit" class="btn btn-default">Submit</button>
+			</form>
+	  	</div>
+	</div>
+{% endblock %}
