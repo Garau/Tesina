@@ -13,7 +13,7 @@
 <body>
 	<div class="">
         <div class="page-header col-sm-10 col-sm-offset-1">
-            <div class="logo col-sm-8">
+            <div class="logo col-sm-5">
                 <h1 id="h1"> 
                     <a href="/">
                         Logo del sito 
@@ -23,10 +23,16 @@
                     </a>
                 </h1>
             </div>
-            <div class="input-group-sm col-sm-offset-10">
-                <a href="/login"><button type="button" class="btn btn-default">log in</button></a>
-                <a href="/signup"><button type="button" class="btn btn-default">sign up</button></a>   <!-- col-sm-offset-4 per spostarlo -->
-            </div>
+            {% if session == True %}
+                <div class="col-sm-offset-10">
+                        <a href="/logout"><button type="button" class="btn btn-default" style="width:75px">Log out</button></a>
+                </div>
+            {% else %}
+                <div class="input-group-sm col-sm-offset-10">
+                    <a href="/login"><button type="button" class="btn btn-default" style="width:75px">log in</button></a>
+                    <a href="/signup"><button type="button" class="btn btn-default" style="width:75px">sign up</button></a>   <!-- col-sm-offset-4 per spostarlo -->
+                </div>
+            {% endif %}
         </div>
     </div>
 

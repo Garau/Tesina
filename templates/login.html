@@ -1,21 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+	{% if flag == false %}
 	<div class="panel panel-default col-sm-4 col-sm-offset-4">
 	  	<div class="panel-body">
-	    	<form>
+	    	<form action="/login" method="POST">
 			  	<div class="form-group">
 				    <label for="username">Username</label>
-				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+				    <input type="text" class="form-control" id="username" placeholder="Username" name="username">
 			  	</div>
 			  	<div class="form-group">
 				    <label for="password">Password</label>
-				    <input type="password" class="form-control" id="password" placeholder="Password">
+				    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
 			  	</div>
 			  	<div style="height: 10px;"></div>
 			  	<button type="submit" class="btn btn-default">Submit</button>
 			</form>
 	  	</div>
 	</div>
+	{% else %}
+		<div class="panel panel-default col-sm-4 col-sm-offset-4">
+	  		<div class="panel-body">
+	  			Benvenuto {{ username }} <br>
+	  			<a href="/">Clica qui</a> per tornare alla home
+	  		</div>
+	  	</div>
+	{% endif %}
 {% endblock %}
