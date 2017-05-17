@@ -31,20 +31,73 @@
 
     <div class="panel panel-default col-sm-4">
         <div class="panel-body">
-            <h1>TITLE</h1>
-            lorem ipsum <br> dolor sit amet <br> consectetur adipiscing elit <br> sed do eiusmod <br> tempor incididunt ut labore <br> et dolore magna aliqua
+            <bold><h2 align = "center">TITOLO SEZIONE</h2></bold><br>
+            {% for number in num_rec %}
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <img class="media-object" src="{{ image2[number] }}" height="75" width="75">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading"><br>Titolo Album</h4>
+                        autore recensione
+                    </div>
+                </div>
+                <br>
+            {% endfor %}
         </div>
     </div>
     <div class="panel panel-default col-sm-3 col-sm-offset-1">
         <div class="panel-body">
-            <h1>TITLE</h1>
-            lorem ipsum <br> dolor sit amet <br> consectetur adipiscing elit <br> sed do eiusmod <br> tempor incididunt ut labore <br> et dolore magna aliqua
+            <h3 align = "center">TITOLO SEZIONE</h3>
+            <div class="thumbnail" style="background: ;">
+                <img src="{{image3[0]}}">
+                <div class="caption">
+                    <h3>Nome album</h3>
+                    <p>Commento sull'album</p>
+                </div>
+            </div>
+            <div class="thumbnail" st>
+                <img src="{{image3[1]}}" style="background: ;">
+                <div class="caption">
+                    <h3>Nome album</h3>
+                    <p>Commento sull'album</p>
+                </div>
+            </div>
+            <div class="thumbnail">
+                <img src="{{image3[2]}}" style="background: ;">
+                <div class="caption">
+                    <h3>Nome album</h3>
+                    <p>Commento sull'album</p>
+                </div>
+            </div>
         </div>
     </div>
     <div class="panel panel-default col-sm-3 col-sm-offset-1">
         <div class="panel-body">
-            <h1>TITLE</h1>
-            lorem ipsum <br> dolor sit amet <br> consectetur adipiscing elit <br> sed do eiusmod <br> tempor incididunt ut labore <br> et dolore magna aliqua
+            <h3 align = "center">TITOLO SEZIONE</h3>
+            <div class="thumbnail" style="background: ;">
+                <img src="{{image4[0]}}">
+                <div class="caption">
+                    <h3>Nome album</h3>
+                    <p>Commento sull'album</p>
+                </div>
+            </div>
+            <div class="thumbnail" st>
+                <img src="{{image4[1]}}" style="background: ;">
+                <div class="caption">
+                    <h3>Nome album</h3>
+                    <p>Commento sull'album</p>
+                </div>
+            </div>
+            <div class="thumbnail">
+                <img src="{{image4[2]}}" style="background: ;">
+                <div class="caption">
+                    <h3>Nome album</h3>
+                    <p>Commento sull'album</p>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

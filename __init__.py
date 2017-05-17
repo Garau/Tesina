@@ -16,7 +16,7 @@ app = Flask(__name__)
 @app.route('/', methods = ['GET', 'POST'])
 def route_home():
     return home(request, session)
-
+    
 @app.route('/base')
 def base():
     return render_template('base.html')
