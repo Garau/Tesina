@@ -32,11 +32,11 @@
     <div class="panel panel-default col-sm-4">
         <div class="panel-body">
             <bold><h2 align = "center">TITOLO SEZIONE</h2></bold><br>
-            {% for number in num_rec %}
+            {% for n in range(9) %}
                 <div class="media">
                     <div class="media-left media-middle">
                         <a href="#">
-                            <img class="media-object" src="{{ image2[number] }}" height="75" width="75">
+                            <img class="media-object" src="{{ image2[n] }}" height="75" width="75">
                         </a>
                     </div>
                     <div class="media-body">

@@ -1,5 +1,6 @@
 import itunespy
 import backend.utils.db as utils
+import random
 
 from random import randint
 #randint(0,9)
@@ -7,40 +8,40 @@ from random import randint
 
 from flask import render_template
 
+db =  utils.pysqlite3()
+
+num_albums = db.query_db("SELECT COUNT(id_album) FROM album")[0][0]
+
 def home(request, session):
-	num_rec = ['','','','','','','','','']
+	
+
 	image = get_covers()
+	image2 = ["ok_computer.jpg", "ok_computer.jpg", "ok_computer.jpg", "ok_computer.jpg", "ok_computer.jpg", "ok_computer.jpg", "ok_computer.jpg", "ok_computer.jpg", "ok_computer.jpg", ]
+	image3 = image
+	image4 = image
+
+	print (image)
 
 	if 'username' not in session:
-		print(image)
-		return render_template('home.html', image=image, num_rec = num_rec)
+		return render_template('home.html', image=image, image2 = image2, image3 = image3, image4 = image4)
 	else:
-		print(image)
-		return render_template('home.html', image=image, num_rec = num_rec, session = True, username = session['username'])
+		return render_template('home.html', image=image, image2 = image2, image3 = image3,  image4 = image4, session = True, username = session['username'])
 
 def get_covers():
 
-	imm = [None, None, None, None, None, None, None, None, None] #9
+	imm = [None, None, None, None] #9
 
-	db =  utils.pysqlite3()
+	rand = []
+	rand = random.sample(range(0, num_albums), 4)
 
-	num_albums = db.query_db("SELECT COUNT(id_album) FROM album")[0][0]
+	query = "SELECT nome, nome_artista FROM album WHERE album.id_album = '%s' OR album.id_album = '%s' OR album.id_album = '%s' OR album.id_album = '%s'" % (rand[0], rand[1], rand[2], rand[3])
+	result = db.query_db(query)
+	print (result)
 
-	j=0
-	while j<9:
-		rand = randint(0, num_albums)
+	if result != None:
+		imm[0]="../static/Covers/" + result[0][1] + "_" + result[0][0] + ".jpg"
+		imm[1]="../static/Covers/" + result[1][1] + "_" + result[1][0] + ".jpg"
+		imm[2]="../static/Covers/" + result[2][1] + "_" + result[2][0] + ".jpg"
+		imm[3]="../static/Covers/" + result[3][1] + "_" + result[3][0] + ".jpg"
 
-		query = "SELECT nome, nome_artista FROM album WHERE album.id_album = '%s'" % (rand)
-		result = db.query_db(query)
-
-		artist = itunespy.search_artist(result[0][1])
-		albums = artist[0].get_albums()
-
-		i=0
-		while albums[i].collection_name != result[0][0]:
-			i=i+1
-			
-		imm[j-1] = albums[i].artwork_url_100.replace('100', '600')
-		j=j+1
-		print (imm)
 	return (imm)
