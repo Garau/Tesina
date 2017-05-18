@@ -10,6 +10,7 @@ from backend.home import home
 from backend.signup import signup
 from backend.login import login
 from backend.logout import logout
+from backend.search import search
 
 app = Flask(__name__)
 
@@ -28,6 +29,14 @@ def route_login():
 @app.route('/signup', methods = ['GET','POST'])
 def route_signup():
     return signup(request, session)
+
+@app.route('/search', methods = ['GET', 'POST'])
+def route_search():
+    return search(request, session)
+
+@app.route('/search/<key>', methods = ['GET', 'POST'])
+def route_search_key(key):
+    return search(request, session, key)
 
 @app.route('/charts')
 def charts():
