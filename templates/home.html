@@ -6,22 +6,22 @@
             <h1 align="center">Basic panel example</h1>
             <div class="row">
                 <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail">
+                    <a href="/artist/{{ image[0] }}" class="thumbnail">
                         <img src="{{ image[0] }}" alt="...">
                     </a>
                 </div>
                 <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail">
+                    <a href="/artist/{{ image[1] }}" class="thumbnail">
                         <img src="{{ image[1] }}" alt="...">
                     </a>
                 </div>
                 <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail">
+                    <a href="{{ image[2] }}" class="thumbnail">
                         <img src="{{ image[2] }}" alt="...">
                     </a>
                 </div>
                 <div class="col-xs-6 col-md-3">
-                    <a href="#" class="thumbnail">
+                    <a href="{{ image[3] }}" class="thumbnail">
                         <img src="{{ image[3] }}" alt="...">
                     </a>
                 </div>
@@ -35,7 +35,7 @@
             {% for n in range(9) %}
                 <div class="media">
                     <div class="media-left media-middle">
-                        <a href="#">
+                        <a href="{{ image2[n] }}">
                             <img class="media-object" src="{{ image2[n] }}" height="75" width="75">
                         </a>
                     </div>

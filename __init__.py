@@ -11,6 +11,7 @@ from backend.signup import signup
 from backend.login import login
 from backend.logout import logout
 from backend.search import search
+from backend.artist import artist
 
 app = Flask(__name__)
 
@@ -37,6 +38,18 @@ def route_search():
 @app.route('/search/<key>', methods = ['GET', 'POST'])
 def route_search_key(key):
     return search(request, session, key)
+
+@app.route('/artist', methods = ['GET', 'POST'])
+def route_artist():
+    return artist(request,session)
+
+@app.route('/artist/<artist_name>', methods = ['GET', 'POST'])
+def route_artist_name(artist_name):
+    return artist(request,session,artist_name)
+
+@app.route('/artist/<artist_name>/<album_name>', methods = ['GET', 'POST'])
+def route_artist_name_album(artist_name, album_name):
+    return artist(request,session,artist_name,album_name)
 
 @app.route('/charts')
 def charts():

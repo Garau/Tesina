@@ -20,8 +20,6 @@ def home(request, session):
 	image3 = get_covers_big()
 	image4 = get_covers_big()
 
-	print (image)
-
 	if 'username' not in session:
 		return render_template('home.html', image=image, image2 = image2, image3 = image3, image4 = image4)
 	else:
@@ -33,8 +31,6 @@ def get_covers():
 
 	rand = []
 	rand = random.sample(range(0, num_albums), 9)
-
-	print (rand)
 
 	query = """
 			SELECT nome, nome_artista 
@@ -50,7 +46,6 @@ def get_covers():
 			OR album.id_album = '%s'
 			""" % (rand[0], rand[1], rand[2], rand[3], rand[4], rand[5], rand[6], rand[7], rand[8])
 	result = db.query_db(query)
-	print (result)
 
 	if result != None:
 		imm[0]="../static/Covers/" + result[0][1] + "_" + result[0][0] + ".jpg"
@@ -71,11 +66,8 @@ def get_covers_big():
 	rand = []
 	rand = random.sample(range(0, num_albums), 4)
 
-	print (rand)
-
 	query = "SELECT nome, nome_artista FROM album WHERE album.id_album = '%s' OR album.id_album = '%s' OR album.id_album = '%s' OR album.id_album = '%s'" % (rand[0], rand[1], rand[2], rand[3])
 	result = db.query_db(query)
-	print (result)
 
 	if result != None:
 		imm[0]="../static/Covers/big/" + result[0][1] + "_" + result[0][0] + ".jpg"

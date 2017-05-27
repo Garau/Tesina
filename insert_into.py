@@ -7,6 +7,21 @@ c = conn.cursor()
 
 artist_name = "Green day"
 
+''''''
+
+#artist info
+
+artist_url = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={}&api_key=6be54ea8ecd35448b04f9d29183d0138".format(artist_name)
+xml = urllib.request.urlopen(artist_url)
+
+xml_dict = xmltodict.parse(xml)
+img_url = xml_dict['lfm']['artist']['image'][3]['#text']
+artist_name = xml_dict['lfm']['artist']['name']
+
+urllib.request.urlretrieve(img_url, "static/artists/" + artist_name  + ".png")
+
+''''''
+
 artist = itunespy.search_artist(artist_name)
 albums = []
 
