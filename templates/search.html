@@ -1,49 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!--
-<div class = "panel panel-default">
-	<div class = "panel-body">
-	{% set count = 0 %}
-    {% for count in range(dict_artists|length) %}
-    	{% set count = count * 2 %}
-    	{% if count < dict_artists|length %}
-	    	<div class="media col-sm-12">
-	    		<div class="row">
-	    		{% if (count < dict_artists|length) %}
-				  	<div class="media-left media-middle">
-				    	<a href="/Artist/{{dict_artists[count].name}}">
-				      		<img class="media-object" 
-				      		src="{{dict_artists[count].path}}"
-						    height="100" width="100">
-				    	</a>
-				  	</div>
-				  	<div class="media-body media-middle">
-				    	<h3 class="media-heading" style = "width: 150px">{{dict_artists[count].name}}</h3>
-				    	<h4 style = "width: 150px">{{dict_artists[count].genre}}</h4>
-				  	</div>
-				{% endif %}
-			  	{% set count = count + 1 %}
-		    	{% if (count < dict_artists|length) %}
-				  	<div class="media-left media-middle">
-				    	<a href="/Artist/{{dict_artists[count].name}}">
-				      		<img class="media-object" 
-				      		src="{{dict_artists[count].path}}"
-						    height="100" width="100">
-				    	</a>
-				  	</div>
-				  	<div class="media-body media-middle">
-				    	<h3 class="media-heading" style = "width: 150px">{{dict_artists[count].name}}</h3>
-				    	<h4 style = "width: 150px">{{dict_artists[count].genre}}</h4>
-				  	</div>
-				{% endif %}
-			  	</div>
-	        </div>
-	    {% endif %}
-    {% endfor %}
-	</div>
-</div>
--->
 
 <div class="panel panel-default">
     <div class="panel-body">
@@ -56,7 +13,7 @@
 	    		<div class="row">
 	    		{% if dict_albums[count] %}
 				  	<div class="media-left media-middle">
-				    	<a href="/Artist/{{dict_albums[count].artist}}/{{dict_albums[count].name}}">
+				    	<a href="/artist/{{dict_albums[count].artist}}/{{dict_albums[count].name}}">
 				      		<img class="media-object" 
 				      		src="{{dict_albums[count].path}}"
 						    height="100" width="100">
@@ -70,7 +27,7 @@
 			  	{% set count = count + 1 %}
 		    	{% if dict_albums[count] %}
 		            <div class="media-left media-middle">
-				    	<a href="/Artist/{{dict_albums[count].artist}}/{{dict_albums[count].name}}">
+				    	<a href="/artist/{{dict_albums[count].artist}}/{{dict_albums[count].name}}">
 				      		<img class="media-object"
 				      		src="{{dict_albums[count].path}}" 
 				      		height="100" width="100">

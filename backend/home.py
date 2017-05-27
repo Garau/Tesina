@@ -15,64 +15,34 @@ num_albums = db.query_db("SELECT COUNT(id_album) FROM album")[0][0]
 def home(request, session):
 	
 
-	image = get_covers_big()
-	image2 = get_covers()
-	image3 = get_covers_big()
-	image4 = get_covers_big()
+	image = get_covers(4, "big")
+	image2 = get_covers(9, "small")
+	image3 = get_covers(3, "big")
+	image4 = get_covers(3, "big")
 
 	if 'username' not in session:
 		return render_template('home.html', image=image, image2 = image2, image3 = image3, image4 = image4)
 	else:
 		return render_template('home.html', image=image, image2 = image2, image3 = image3,  image4 = image4, session = True, username = session['username'])
 
-def get_covers():
 
-	imm = [None, None, None, None, None, None, None, None, None] #9
-
+def get_covers(num, type):
+	imm = []
 	rand = []
-	rand = random.sample(range(0, num_albums), 9)
 
-	query = """
-			SELECT nome, nome_artista 
-			FROM album 
-			WHERE album.id_album = '%s' 
-			OR album.id_album = '%s' 
-			OR album.id_album = '%s' 
-			OR album.id_album = '%s'
-			OR album.id_album = '%s'
-			OR album.id_album = '%s'
-			OR album.id_album = '%s'
-			OR album.id_album = '%s'
-			OR album.id_album = '%s'
-			""" % (rand[0], rand[1], rand[2], rand[3], rand[4], rand[5], rand[6], rand[7], rand[8])
+	rand = random.sample(range(0, num_albums), num)
+
+	query = "SELECT nome, nome_artista FROM album WHERE album.id_album = '%s' OR album.id_album = '{}'".format(rand[0])
+
+	for i in range(num-1):
+		query = query + " OR album.id_album = '{}'".format(rand[i+1])
+
 	result = db.query_db(query)
 
-	if result != None:
-		imm[0]="../static/Covers/" + result[0][1] + "_" + result[0][0] + ".jpg"
-		imm[1]="../static/Covers/" + result[1][1] + "_" + result[1][0] + ".jpg"
-		imm[2]="../static/Covers/" + result[2][1] + "_" + result[2][0] + ".jpg"
-		imm[3]="../static/Covers/" + result[3][1] + "_" + result[3][0] + ".jpg"
-		imm[4]="../static/Covers/" + result[4][1] + "_" + result[4][0] + ".jpg"
-		imm[5]="../static/Covers/" + result[5][1] + "_" + result[5][0] + ".jpg"
-		imm[6]="../static/Covers/" + result[6][1] + "_" + result[6][0] + ".jpg"
-		imm[7]="../static/Covers/" + result[7][1] + "_" + result[7][0] + ".jpg"
-		imm[8]="../static/Covers/" + result[8][1] + "_" + result[8][0] + ".jpg"
-
-	return (imm)
-
-def get_covers_big():
-	imm = [None, None, None, None]
-
-	rand = []
-	rand = random.sample(range(0, num_albums), 4)
-
-	query = "SELECT nome, nome_artista FROM album WHERE album.id_album = '%s' OR album.id_album = '%s' OR album.id_album = '%s' OR album.id_album = '%s'" % (rand[0], rand[1], rand[2], rand[3])
-	result = db.query_db(query)
-
-	if result != None:
-		imm[0]="../static/Covers/big/" + result[0][1] + "_" + result[0][0] + ".jpg"
-		imm[1]="../static/Covers/big/" + result[1][1] + "_" + result[1][0] + ".jpg"
-		imm[2]="../static/Covers/big/" + result[2][1] + "_" + result[2][0] + ".jpg"
-		imm[3]="../static/Covers/big/" + result[3][1] + "_" + result[3][0] + ".jpg"
-
+	for i in range(num):
+		if type == "small":
+			path = "../static/Covers/" + result[i][1] + "_" + result[i][0] + ".jpg"
+		elif type == "big":
+			path = "../static/Covers/big/" + result[i][1] + "_" + result[i][0] + ".jpg"
+		imm.append({'path': path, 'artist': result[i][1], 'name': result[i][0]})
 	return (imm)
