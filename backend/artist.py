@@ -11,7 +11,7 @@ from flask import redirect
 API_KEY = "6be54ea8ecd35448b04f9d29183d0138"
 
 def artist(request, session, artist_name = None, album_name = None):
-	print ("album name - " + album_name)
+
 	if album_name is None: 
 
 		artist_xml = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={}&api_key={}".format(artist_name, API_KEY)

@@ -36,7 +36,7 @@
             <div class="row">
                 {% for i in range (top_albums|length)%}
                     <div class="col-xs-6 col-md-3">
-                        <a href="/" class="thumbnail">
+                        <a href="/artist/{{ top_albums[i].artist }}/{{ top_albums[i].name }}" class="thumbnail">
                             <img src="{{top_albums[i].path}}" alt="...">
                         </a>
                     </div>
