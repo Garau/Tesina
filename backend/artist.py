@@ -16,18 +16,17 @@ def artist(request, session, artist_name = None, album_name = None):
 	artist_name = artist_name.title()
 
 	if album_name is None: 
-		artist_xml = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={}&api_key={}".format(artist_name, API_KEY)
-		xml = urllib.request.urlopen(artist_xml)
-		xml_dict = xmltodict.parse(xml)
-		
-		#print (xml_dict['lfm']['artist']['bio'].keys())
-		artist_info = xml_dict['lfm']['artist']['bio']['summary']
+		artist_json = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={}&api_key={}&format=json".format(artist_name, API_KEY)
+		json_info = urllib.request.urlopen(artist_json)
+		info_dict = json.loads(json_info.read())
+
+		artist_info = info_dict['lfm']['artist']['bio']['summary']
 
 		if artist_info is None:
 			artist_info = "Nessuna descrizione disponibile"
 
 		try:
-			artist_path = xml_dict['lfm']['artist']['image'][3]['#text']
+			artist_path = info_dict['lfm']['artist']['image'][3]['#text']
 		except:
 			artist_path = "../static/not_found.jpg"
 
@@ -37,12 +36,12 @@ def artist(request, session, artist_name = None, album_name = None):
 		return render_template("artist.html", artist_name = artist_name, artist_info = artist_info, 
 			artist_path = artist_path, top_albums = top_albums)
 	else:
-		artist_name = artist_name.replace("/","_")
-		album_name = album_name.replace("/", "_")
-		artist_name = artist_name.replace(" ","%20")
-		album_name = album_name.replace(" ", "%20")
+		artist_name_form = artist_name.replace("/","_")
+		album_name_form = album_name.replace("/", "_")
+		artist_name_form = artist_name.replace(" ","%20")
+		album_name_form = album_name.replace(" ", "%20")
 
-		url_album = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={}&artist={}&album={}&format=json".format(API_KEY, artist_name, album_name)
+		url_album = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={}&artist={}&album={}&format=json".format(API_KEY, artist_name_form, album_name_form)
 
 		json_album = urllib.request.urlopen(url_album)
 		json_album = json.loads(json_album.read())
@@ -58,8 +57,6 @@ def artist(request, session, artist_name = None, album_name = None):
 
 		songs = links.get_tracklist(album_name)
 
-		#top_albums = get_top_albums(artist_name, API_KEY)
-		#return render_template("album.html", artist_name = artist_name, album_name = album_name, album_path=album_path, album_info = album_info, songs = songs, top_albums = top_albums)
 		return render_template("album.html", artist_name = artist_name, album_name = album_name, album_path=album_path, album_info = album_info, songs = songs)
 
 def get_top_albums(artist_name, API_KEY):

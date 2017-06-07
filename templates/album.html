@@ -30,25 +30,31 @@
 				    		<div class="row">
 				    		{% if songs[count] %}
 				    			<div class="panel panel-default col-sm-4">
-        							<div class="panel-body">
-        								{{songs[count].name}}
-        							</div>
+                                    <a href = "/{{artist_name}}/{{album_name}}/{{songs[count].name}}">
+            							<div class="panel-body">
+            								{{songs[count].name}}
+            							</div>
+                                    </a>
         						</div>
 							{% endif %}
 						  	{% set count = count + 1 %}
 					    	{% if songs[count] %}
 							  	<div class="panel panel-default col-sm-4">
-        							<div class="panel-body">
-        								{{songs[count].name}}
-        							</div>
+        							<a href = "/{{artist_name}}/{{album_name}}/{{songs[count].name}}">
+                                        <div class="panel-body">
+                                            {{songs[count].name}}
+                                        </div>
+                                    </a>
         						</div>
 							{% endif %}
 							{% set count = count + 1 %}
 					    	{% if songs[count] %}
 							  	<div class="panel panel-default col-sm-4">
-        							<div class="panel-body">
-        								{{songs[count].name}}
-        							</div>
+        							<a href = "/{{artist_name}}/{{album_name}}/{{songs[count].name}}">
+                                        <div class="panel-body">
+                                            {{songs[count].name}}
+                                        </div>
+                                    </a>
         						</div>
 							{% endif %}
 						  	</div>
