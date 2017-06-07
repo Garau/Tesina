@@ -22,12 +22,7 @@ def search(request, session, key=None):
 
 		for results in result_albums:
 			album_names.append(results['collectionName'])
-			path = r"static/covers/" + results['artistName'] + "_" + results['collectionName'] + ".jpg"
-			if os.path.isfile(path):
-				path = "../" + path
-				album_paths.append({'path': path, 'name': results['collectionName'], 'artist': results['artistName']})
-			else:
-				album_paths.append({'path': results['artworkUrl100'], 'name': results['collectionName'], 'artist': results['artistName']})
+			album_paths.append({'path': results['artworkUrl100'], 'name': results['collectionName'], 'artist': results['artistName']})
 
 		return render_template("search.html", dict_albums = album_paths)
 	else:

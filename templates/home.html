@@ -3,7 +3,7 @@
 {% block content %}
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1 align="center">Basic panel example</h1>
+            <h1 align="center">Best rated albums</h1>
             <div class="row">
                 {% for n in range(4)%}
                 <div class="col-xs-6 col-md-3">
@@ -19,7 +19,7 @@
     <div class="panel panel-default col-sm-4">
         <div class="panel-body">
             <bold><h2 align = "center">TITOLO SEZIONE</h2></bold><br>
-            {% for n in range(9) %}
+            {% for n in range(4) %}
                 <div class="media">
                     <div class="media-left media-middle">
                         <a href="/artist/{{ image2[n].artist }}/{{ image2[n].name }}">

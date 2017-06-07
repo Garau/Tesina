@@ -4,18 +4,20 @@
 
 	<div class="panel panel-default ">
         <div class="panel-body">
-            <h1 align="center">Basic panel example</h1>
+            <h1 align="center">{{artist_name}}</h1>
             <div class = "col-md-3">
-                <a href="/" class="thumbnail">
+                <a class="thumbnail">
                     {% if artist_path %}
                         <img src="{{artist_path}}" alt="...">
                     {% else %}
                         <img src="None" alt="...">
                     {% endif %}
                 </a>
-                <h2 align="center">Tracklist</h2>
+                <!--h2 align="center">Tracklist</h2-->
             </div>
-            {{artist_info}}
+            <h4>
+                {{artist_info}}
+            </h4>
         </div>
     </div>
 <!--

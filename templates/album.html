@@ -1,1 +1,89 @@
-EH VOLEVI visualizzare "{{album_name}}" di {{artist_name}}
+{% extends "base.html" %}
+
+{% block content %}
+	<div class="panel panel-default ">
+        <div class="panel-body">
+            <h1 align="center">{{artist_name}} - {{album_name}}</h1>
+            <div class = "col-md-3">
+                <a class="thumbnail">
+                    {% if album_path %}
+                        <img src="{{album_path}}" alt="...">
+                    {% else %}
+                        <img src="None" alt="...">
+                    {% endif %}
+                </a>
+            </div>
+            {{album_info}}
+        </div>
+    </div>
+
+    <div class="panel panel-default ">
+        <div class="panel-body">
+            <h1 align="center"> Tracklist </h1>
+            <div class = "col-md-12">
+                {% set count = 0 %}
+			    {% set length = (songs|length/2)|int %}
+			    {% for count in range(songs|length) %}
+			    	{% set count = count * 3 %}
+			    	{% if count < songs|length %}
+				    	<div class="media col-sm-12">
+				    		<div class="row">
+				    		{% if songs[count] %}
+				    			<div class="panel panel-default col-sm-4">
+        							<div class="panel-body">
+        								{{songs[count].name}}
+        							</div>
+        						</div>
+							{% endif %}
+						  	{% set count = count + 1 %}
+					    	{% if songs[count] %}
+							  	<div class="panel panel-default col-sm-4">
+        							<div class="panel-body">
+        								{{songs[count].name}}
+        							</div>
+        						</div>
+							{% endif %}
+							{% set count = count + 1 %}
+					    	{% if songs[count] %}
+							  	<div class="panel panel-default col-sm-4">
+        							<div class="panel-body">
+        								{{songs[count].name}}
+        							</div>
+        						</div>
+							{% endif %}
+						  	</div>
+				        </div>
+				    {% endif %}
+			    {% endfor %}
+            </div>
+        </div>
+    </div>
+<!--
+    <div class="panel panel-default col-md-9 col-sm-offset-1">
+        <div class="panel-body">
+            <h1 align="center">Basic panel example</h1>
+            <div>
+                <a href="/" class="thumbnail">
+                    <img src="../static/test.jpg" alt="...">
+                </a>
+            </div>
+            <h2 align="center">Tracklist</h2>
+        </div>
+    </div> -->
+    <!--
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h1 align="center">Most popular albums</h1>
+            <div class="row">
+                {% for i in range (top_albums|length)%}
+                    <div class="col-xs-6 col-md-3">
+                        <a href="/artist/{{ top_albums[i].artist }}/{{ top_albums[i].name }}" class="thumbnail">
+                            <img src="{{top_albums[i].path}}" alt="...">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    -->
+{% endblock %}
