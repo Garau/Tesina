@@ -64,7 +64,11 @@ def review(request, session, artist_name, album_name, album_id):
 				INSERT INTO artista
 				VALUES (NULL, '{}','{}',{})
 				""".format(name, genre, artist_id)
-				db.query_db(query)
+				try:
+					db.query_db(query)
+				except:
+					error = "Artista già esistente"
+					return render_template('error.html', error = error)
 
 			if session.get('album_id'):
 				id_album = session['album_id']
@@ -81,7 +85,11 @@ def review(request, session, artist_name, album_name, album_id):
 				INSERT INTO album
 				VALUES (NULL, '{}', '{}', '{}', {})
 				""".format(album_name, genre, releaseDate, album_id)
-				db.query_db(query)
+				try:
+					db.query_db(query)
+				except:
+					error = "album già esistente"
+					return render_template('error.html', error = error)
 
 				query = """
 				SELECT id_album
@@ -101,7 +109,11 @@ def review(request, session, artist_name, album_name, album_id):
 				INSERT INTO composizione
 				VALUES ({},{})
 				""".format(id_artista, id_album)
-				db.query_db(query)
+				try:
+					db.query_db(query)
+				except:
+					error = "associazione già esistente"
+					return render_template('error.html', error = error)
 
 			id_utente = session['user_id']
 			titolo = request.form['title']
@@ -113,7 +125,12 @@ def review(request, session, artist_name, album_name, album_id):
 			INSERT INTO recensione
 			VALUES ({},{},'{}','{}',{}, '{}')
 			""".format(id_album, id_utente, titolo, testo, voto, time)
+			print (query)
 
-			db.query_db(query)
+			try:
+				db.query_db(query)
+			except:
+				error = "errore nella recensione"
+				return render_template('error.html', error = error)
 
 			return redirect(url_for('route_home'))

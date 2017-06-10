@@ -3,6 +3,8 @@ import backend.utils.db as utils
 
 from flask import render_template
 
+db =  utils.pysqlite3()
+
 def login(request, session):
 	if 'username' not in request.form:
 		return render_template('login.html', flag = False)
@@ -13,13 +15,17 @@ def login(request, session):
 				FROM utente
 				WHERE utente.username = '%s'
 				""" % (username)
-		db =  utils.pysqlite3()
-		result = db.query_db(query)
-		psw = result[0][0]
+		try:
+			result = db.query_db(query)
+			psw = result[0][0]
+		except:
+			error = "Username errato"
+			return render_template('error.html', error = error)
 
 		if(psw == request.form['password']):
 			session['username'] = username
 			session['user_id'] = result[0][1]
 			return render_template('login.html', flag = True, username = username)
 		else:
-			print("password errata")
+			error = "Password errata"
+			return render_template('error.html', error = error)
