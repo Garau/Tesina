@@ -13,7 +13,7 @@
 	    		<div class="row">
 	    		{% if dict_albums[count] %}
 				  	<div class="media-left media-middle">
-				    	<a href="/artist/{{dict_albums[count].artist}}/{{dict_albums[count].name}}">
+				    	<a href="/artist/{{dict_albums[count].artist}}/{{dict_albums[count].name}}/{{dict_albums[count].id}}">
 				      		<img class="media-object" 
 				      		src="{{dict_albums[count].path}}"
 						    height="100" width="100">
@@ -27,7 +27,7 @@
 			  	{% set count = count + 1 %}
 		    	{% if dict_albums[count] %}
 		            <div class="media-left media-middle">
-				    	<a href="/artist/{{dict_albums[count].artist}}/{{dict_albums[count].name}}">
+				    	<a href="/artist/{{dict_albums[count].artist}}/{{dict_albums[count].name}}/{{dict_albums[count].id}}">
 				      		<img class="media-object"
 				      		src="{{dict_albums[count].path}}" 
 				      		height="100" width="100">

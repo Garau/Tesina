@@ -1,5 +1,6 @@
 import json
 import urllib.request
+import datetime
 
 def get_album_art_small(album_name):
 	album_name = album_name.replace(" ", "%20")
@@ -16,11 +17,11 @@ def get_album_art(album_name):
 	link = link.replace("100", "600")
 	return link
 
-def lookup_covers(dict):
+def lookup_covers(my_dict):
 	path = "https://itunes.apple.com/lookup?id="
 	ids = ""
 
-	for albums in dict:
+	for albums in my_dict:
 		ids = ids + str(albums['id_itunes']) + ","
 
 	ids = ids[:-1]
@@ -33,9 +34,16 @@ def lookup_covers(dict):
 	path_dict = []
 
 	for item in link:
-		path_dict.append({'path': item['artworkUrl100'].replace("100", "600")})
+		path_dict.append({'path': item['artworkUrl100'].replace("100", "600"), 'id': item['collectionId']})
 
 	return path_dict
+
+def lookup_cover(id_itunes):
+	url_albums = "https://itunes.apple.com/lookup?id={}&format=json".format(id_itunes)
+	result_albums = urllib.request.urlopen(url_albums)
+	result_albums = json.loads(result_albums.read())
+
+	return result_albums['results'][0]['artworkUrl100'].replace("100", "600")
 
 def get_tracklist(album_name):
 	album_name = album_name.replace(" ", "%20")
@@ -149,3 +157,37 @@ album_info = json_album['album']['wiki']['summary']
 
 print (album_info)
 '''
+'''
+key = "Siamese Dream"
+key = key.replace(' ', '%20')
+url_albums = "https://itunes.apple.com/search?term={}&media=music&entity=album&country=US&limit=20".format(key)
+result_albums = urllib.request.urlopen(url_albums)
+result_albums = json.loads(result_albums.read())['results']
+
+print (result_albums[0].keys())
+
+print (result_albums[0]['artistId'])
+print (result_albums[0]['artistName'])
+
+key = result_albums[0]['collectionId']
+key = "723539773"
+url_albums = "https://itunes.apple.com/lookup?id={}&format=json".format(key)
+result_albums = urllib.request.urlopen(url_albums)
+result_albums = json.loads(result_albums.read())
+#print (result_albums['results'][0].keys())
+'''
+'''
+id_itunes = "315611219"
+
+url_albums = "https://itunes.apple.com/lookup?id={}&format=json".format(id_itunes)
+result_albums = urllib.request.urlopen(url_albums)
+result_albums = json.loads(result_albums.read())
+
+print (result_albums['results'][0].keys())
+name = result_albums['results'][0]['artistName']
+genre = result_albums['results'][0]['primaryGenreName']
+
+print (name+genre)
+'''
+
+#print ("Current date & time " + str(datetime.datetime.now()))

@@ -12,6 +12,8 @@ from backend.login import login
 from backend.logout import logout
 from backend.search import search
 from backend.artist import artist
+from backend.review import review
+from backend.view_review import view_review
 
 app = Flask(__name__)
 
@@ -47,9 +49,17 @@ def route_artist():
 def route_artist_name(artist_name):
     return artist(request,session,artist_name)
 
-@app.route('/artist/<artist_name>/<album_name>', methods = ['GET', 'POST'])
-def route_artist_name_album(artist_name, album_name):
-    return artist(request,session,artist_name,album_name)
+@app.route('/artist/<artist_name>/<album_name>/<album_id>', methods = ['GET', 'POST'])
+def route_artist_name_album(artist_name, album_name, album_id):
+    return artist(request,session,artist_name,album_name,album_id)
+
+@app.route('/review/<artist_name>/<album_name>/<album_id>', methods = ['GET', 'POST'])
+def route_review(artist_name, album_name, album_id):
+    return review(request,session,artist_name,album_name,album_id)
+
+@app.route('/review/<username>/<artist_name>/<album_name>/<album_id>', methods = ['GET', 'POST'])
+def route_view_review(username, artist_name, album_name, album_id):
+    return view_review(request,session,username,artist_name,album_name,album_id)
 
 @app.route('/charts')
 def charts():

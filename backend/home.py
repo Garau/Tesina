@@ -17,37 +17,21 @@ def home(request, session):
 	
 
 	image = get_top_albums(4)
-	image2 = get_top_albums(4, "small")
+	image2 = latest_reviews(9)
 	image3 = image
 	image4 = image
 
 	if 'username' not in session:
 		return render_template('home.html', image=image, image2 = image2, image3 = image3, image4 = image4)
 	else:
-		return render_template('home.html', image=image, image2 = image2, image3 = image3,  image4 = image4, session = True, username = session['username'])
-
-
-def get_covers(num, type):
-	imm = []
-	rand = []
-
-	rand = random.sample(range(0, num_albums), num)
-
-	query = "SELECT nome, nome_artista FROM album WHERE album.id_album = '%s' OR album.id_album = '{}'".format(rand[0])
-
-	for i in range(num-1):
-		query = query + " OR album.id_album = '{}'".format(rand[i+1])
-
-	result = db.query_db(query)
-
-	for i in range(num):
-		if type == "small":
-			path = "../static/Covers/" + result[i][1] + "_" + result[i][0] + ".jpg"
-		elif type == "big":
-			path = "../static/Covers/big/" + result[i][1] + "_" + result[i][0] + ".jpg"
-		imm.append({'path': path, 'artist': result[i][1], 'name': result[i][0]})
-	return (imm)
-
+		if 'rating' in session:
+			album_path = session['album_path']
+			session.pop('rating', None)
+			session.pop('album_path', None)
+			session.pop('album_id', None)
+			return render_template('home.html', image=image, image2 = image2, image3 = image3,  image4 = image4, session = True, username = session['username'], album_path = album_path, rating = True)
+		else:
+			return render_template('home.html', image=image, image2 = image2, image3 = image3,  image4 = image4, session = True, username = session['username'])
 
 def get_top_albums(num, size = None):
 	albums = []
@@ -66,7 +50,6 @@ def get_top_albums(num, size = None):
 	""".format(num)
 
 	result = db.query_db(query)
-
         
 	if size is not None:
 		for results in result:
@@ -76,22 +59,40 @@ def get_top_albums(num, size = None):
 		for results in result:
 			albums.append({'name': results[0], 'artist': results[1]})
 			paths.append({'id_itunes': results[3]})
-
 	paths = links.lookup_covers(paths)
 
 	for n in range(len(albums)):
-		final.append({'name': albums[n]['name'], 'artist': albums[n]['artist'], 'path': paths[n]['path']})
+		final.append({'name': albums[n]['name'], 'artist': albums[n]['artist'], 'path': paths[n]['path'], 'id': paths[n]['id']})
 
 	return final
-'''
-	Update 31-05-17
-rimossi file statici
-modificata tabella recensione: aggiunto campo "voto" not null, modificato campo "testo" null, aggiunto check sul voto
-modifica tabella album: rimosso campo "nome_artista" perchè era ricavabile dalla tabella "artista"
-aggiunti "ON UPDATE CASCADE" alle foreign key
-aggiunto campo "path" alla tabella album, per indicare il percorso della cover (troppo lento calcolarlo ogni volta)
-iniziata funzione per gli album con voto maggiore
 
-https://gist.github.com/iggym/6023041
-https://itunes.apple.com/lookup?id=394123397&entity=album&limit=1 (id = artistId)
-'''
+def latest_reviews(num):
+	albums = []
+	paths = []
+	final = []
+
+	query = """
+	SELECT album.nome, album.id_itunes, utente.username, artista.nome
+	FROM album, recensione, utente, composizione, artista
+	WHERE album.id_album = recensione.id_album
+	AND recensione.id_utente = utente.id_utente
+	AND album.id_album = composizione.id_album
+	AND composizione.id_artista = artista.id_artista
+	ORDER BY recensione.data DESC
+	LIMIT {}
+	""".format(num)
+	results = db.query_db(query)
+	print (results)
+
+	for result in results:
+		albums.append({'artist': result[3], 'name': result[0], 'id': result[1], 'author': result[2]})
+		paths.append({'id_itunes': result[1]})
+
+	paths = links.lookup_covers(paths)
+
+	for n in range(0, len(albums)):
+		final.append({'name': albums[n]['name'], 'artist': albums[n]['artist'], 'path': paths[n]['path'], 'id': paths[n]['id'], 'author': albums[n]['author']})
+
+	print (final)
+
+	return final

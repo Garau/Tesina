@@ -14,6 +14,18 @@
                 </a>
             </div>
             {{album_info}}
+            <br><br>
+            {% if rating %}
+            	qualcuno ha già recensito questo album,
+            	<a href = "/review/{{artist_name}}/{{album_name}}/{{album_id}}">
+	                scrivi una recensione!
+	            </a>
+            {% else %}
+            	Nessuno ha ancora recensito questo album, 
+	            <a href = "/review/{{artist_name}}/{{album_name}}/{{album_id}}">
+	                scrivi una recensione!
+	            </a>
+	        {% endif %}
         </div>
     </div>
 
@@ -30,31 +42,25 @@
 				    		<div class="row">
 				    		{% if songs[count] %}
 				    			<div class="panel panel-default col-sm-4">
-                                    <a href = "/{{artist_name}}/{{album_name}}/{{songs[count].name}}">
-            							<div class="panel-body">
-            								{{songs[count].name}}
-            							</div>
-                                    </a>
+        							<div class="panel-body">
+        								{{songs[count].name}}
+        							</div>
         						</div>
 							{% endif %}
 						  	{% set count = count + 1 %}
 					    	{% if songs[count] %}
 							  	<div class="panel panel-default col-sm-4">
-        							<a href = "/{{artist_name}}/{{album_name}}/{{songs[count].name}}">
-                                        <div class="panel-body">
-                                            {{songs[count].name}}
-                                        </div>
-                                    </a>
+        							<div class="panel-body">
+        								{{songs[count].name}}
+        							</div>
         						</div>
 							{% endif %}
 							{% set count = count + 1 %}
 					    	{% if songs[count] %}
 							  	<div class="panel panel-default col-sm-4">
-        							<a href = "/{{artist_name}}/{{album_name}}/{{songs[count].name}}">
-                                        <div class="panel-body">
-                                            {{songs[count].name}}
-                                        </div>
-                                    </a>
+        							<div class="panel-body">
+        								{{songs[count].name}}
+        							</div>
         						</div>
 							{% endif %}
 						  	</div>

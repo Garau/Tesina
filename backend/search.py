@@ -22,7 +22,7 @@ def search(request, session, key=None):
 
 		for results in result_albums:
 			album_names.append(results['collectionName'])
-			album_paths.append({'path': results['artworkUrl100'], 'name': results['collectionName'], 'artist': results['artistName']})
+			album_paths.append({'path': results['artworkUrl100'], 'name': results['collectionName'], 'artist': results['artistName'], 'id': results['collectionId']})
 
 		return render_template("search.html", dict_albums = album_paths)
 	else:

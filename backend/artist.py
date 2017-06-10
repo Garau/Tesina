@@ -12,7 +12,7 @@ from flask import redirect
 
 API_KEY = "6be54ea8ecd35448b04f9d29183d0138"
 
-def artist(request, session, artist_name = None, album_name = None):
+def artist(request, session, artist_name = None, album_name = None, album_id = None):
 	artist_name = artist_name.title()
 
 	if album_name is None: 
@@ -20,7 +20,10 @@ def artist(request, session, artist_name = None, album_name = None):
 		json_info = urllib.request.urlopen(artist_json)
 		info_dict = json.loads(json_info.read())
 
-		artist_info = info_dict['lfm']['artist']['bio']['summary']
+		try:
+			artist_info = info_dict['lfm']['artist']['bio']['summary']
+		except:
+			artist_info = None
 
 		if artist_info is None:
 			artist_info = "Nessuna descrizione disponibile"
@@ -36,6 +39,21 @@ def artist(request, session, artist_name = None, album_name = None):
 		return render_template("artist.html", artist_name = artist_name, artist_info = artist_info, 
 			artist_path = artist_path, top_albums = top_albums)
 	else:
+		db =  utils.pysqlite3()
+		query = """SELECT AVG(recensione.voto)
+		FROM album, recensione
+		WHERE album.id_album = recensione.id_album
+		AND album.id_itunes = {}
+		GROUP BY recensione.id_album
+		ORDER BY AVG(recensione.voto) DESC""".format(album_id)
+		result = db.query_db(query)
+		print (result)
+
+		if result:
+			rating = result[0]
+		else:
+			rating = None
+
 		artist_name_form = artist_name.replace("/","_")
 		album_name_form = album_name.replace("/", "_")
 		artist_name_form = artist_name.replace(" ","%20")
@@ -43,21 +61,21 @@ def artist(request, session, artist_name = None, album_name = None):
 
 		url_album = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={}&artist={}&album={}&format=json".format(API_KEY, artist_name_form, album_name_form)
 
-		json_album = urllib.request.urlopen(url_album)
-		json_album = json.loads(json_album.read())
-
 		try:
+			json_album = urllib.request.urlopen(url_album)
+			json_album = json.loads(json_album.read())
+
 			album_info = json_album['album']['wiki']['summary']
 		except:
 			album_info = "No description available"
 
 		album_info = album_info.split('<a', 1)[0]
 
-		album_path = links.get_album_art(album_name)
+		album_path = links.lookup_cover(album_id)
 
 		songs = links.get_tracklist(album_name)
 
-		return render_template("album.html", artist_name = artist_name, album_name = album_name, album_path=album_path, album_info = album_info, songs = songs)
+		return render_template("album.html", artist_name = artist_name, album_name = album_name, album_path=album_path, album_info = album_info, songs = songs, album_id = album_id, rating = rating)
 
 def get_top_albums(artist_name, API_KEY):
 	top_album_xml = "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist={}&api_key={}".format(artist_name, API_KEY)
