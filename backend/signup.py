@@ -20,7 +20,7 @@ def signup(request, session):
 			if email == confirm_email:
 				query = """
 					INSERT INTO utente
-					VALUES (NULL, '%s', '%s', '%s', '%s', '%s')
+					VALUES (NULL, '%s', '%s', '%s', '%s', '%s', NULL)
 					""" % (username, first_name, second_name, password, email)
 				print (query)
 				db =  utils.pysqlite3()

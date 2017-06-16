@@ -61,6 +61,8 @@ def route_review(artist_name, album_name, album_id):
 def route_view_review(username, artist_name, album_name, album_id):
     return view_review(request,session,username,artist_name,album_name,album_id)
 
+@app.route('/profile/<username>', methods = ['GET', 'POST'])
+
 @app.route('/charts')
 def charts():
     return render_template('charts.html')

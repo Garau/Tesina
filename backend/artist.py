@@ -16,12 +16,12 @@ def artist(request, session, artist_name = None, album_name = None, album_id = N
 	artist_name = artist_name.title()
 
 	if album_name is None: 
-		artist_json = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={}&api_key={}&format=json".format(artist_name, API_KEY)
+		artist_json = "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist={}&api_key={}&format=json".format(artist_name.replace(" ", "%20"), API_KEY)
 		json_info = urllib.request.urlopen(artist_json)
 		info_dict = json.loads(json_info.read())
 
 		try:
-			artist_info = info_dict['lfm']['artist']['bio']['summary']
+			artist_info = info_dict['artist']['bio']['summary']
 		except:
 			artist_info = None
 
@@ -29,7 +29,7 @@ def artist(request, session, artist_name = None, album_name = None, album_id = N
 			artist_info = "Nessuna descrizione disponibile"
 
 		try:
-			artist_path = info_dict['lfm']['artist']['image'][3]['#text']
+			artist_path = info_dict['artist']['image'][3]['#text']
 		except:
 			artist_path = "../static/not_found.jpg"
 
@@ -39,18 +39,27 @@ def artist(request, session, artist_name = None, album_name = None, album_id = N
 		return render_template("artist.html", artist_name = artist_name, artist_info = artist_info, 
 			artist_path = artist_path, top_albums = top_albums)
 	else:
+		reviews = []
 		db =  utils.pysqlite3()
-		query = """SELECT AVG(recensione.voto)
+		query = """SELECT AVG(recensione.voto), COUNT (recensione.id_album)
 		FROM album, recensione
 		WHERE album.id_album = recensione.id_album
 		AND album.id_itunes = {}
 		GROUP BY recensione.id_album
 		ORDER BY AVG(recensione.voto) DESC""".format(album_id)
 		result = db.query_db(query)
-		print (result)
 
 		if result:
-			rating = result[0]
+			rating = result[0][0]
+			query = """SELECT utente.username, utente.immagine, recensione.titolo, recensione.voto
+			FROM recensione, album, utente
+			WHERE album.id_album = recensione.id_album
+			AND recensione.id_utente = utente.id_utente
+			AND album.id_itunes = {}""".format(album_id)
+			results = db.query_db(query)
+
+			for result in results:
+				reviews.append({'author': result[0], 'profile_pic': result[1],'title': result[2], 'rate': result[3]})
 		else:
 			rating = None
 
@@ -59,7 +68,7 @@ def artist(request, session, artist_name = None, album_name = None, album_id = N
 		artist_name_form = artist_name.replace(" ","%20")
 		album_name_form = album_name.replace(" ", "%20")
 
-		url_album = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={}&artist={}&album={}&format=json".format(API_KEY, artist_name_form, album_name_form)
+		url_album = "http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key={}&artist={}&album={}&format=json&lang=IT".format(API_KEY, artist_name_form, album_name_form)
 
 		try:
 			json_album = urllib.request.urlopen(url_album)
@@ -71,11 +80,16 @@ def artist(request, session, artist_name = None, album_name = None, album_id = N
 
 		album_info = album_info.split('<a', 1)[0]
 
-		album_path = links.lookup_cover(album_id)
+		info = links.lookup_info(album_id)
+		album_path = info[0]['image']
+		releaseDate = info[0]['date'][0:4]
+		genre = info[0]['genre']
+		price = info[0]['price']
+		#album_path = links.lookup_cover(album_id)
 
 		songs = links.get_tracklist(album_name)
 
-		return render_template("album.html", artist_name = artist_name, album_name = album_name, album_path=album_path, album_info = album_info, songs = songs, album_id = album_id, rating = rating)
+		return render_template("album.html", artist_name = artist_name, album_name = album_name, album_path=album_path, album_info = album_info, songs = songs, album_id = album_id, rating = rating, reviews = reviews, releaseDate = releaseDate, genre = genre, price = price)
 
 def get_top_albums(artist_name, API_KEY):
 	top_album_xml = "http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist={}&api_key={}".format(artist_name, API_KEY)

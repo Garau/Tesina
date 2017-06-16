@@ -18,7 +18,7 @@ def home(request, session):
 
 	image = get_top_albums(4)
 	image2 = latest_reviews(9)
-	image3 = image
+	image3 = links.get_new_albums(9)
 	image4 = image
 
 	if 'username' not in session:
@@ -82,7 +82,6 @@ def latest_reviews(num):
 	LIMIT {}
 	""".format(num)
 	results = db.query_db(query)
-	print (results)
 
 	for result in results:
 		albums.append({'artist': result[3], 'name': result[0], 'id': result[1], 'author': result[2]})
@@ -92,7 +91,5 @@ def latest_reviews(num):
 
 	for n in range(0, len(albums)):
 		final.append({'name': albums[n]['name'], 'artist': albums[n]['artist'], 'path': paths[n]['path'], 'id': paths[n]['id'], 'author': albums[n]['author']})
-
-	print (final)
 
 	return final

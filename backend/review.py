@@ -81,16 +81,17 @@ def review(request, session, artist_name, album_name, album_id):
 				releaseDate = result_albums['results'][0]['releaseDate'][:10]
 				genre = result_albums['results'][0]['primaryGenreName']
 
-				query = """
-				INSERT INTO album
-				VALUES (NULL, '{}', '{}', '{}', {})
-				""".format(album_name, genre, releaseDate, album_id)
+				query = "INSERT INTO album VALUES (NULL, '{}', '{}', '{}', {})".format(album_name, genre, releaseDate, album_id)
+
+				print (query)
+				db.query_db(query)
+				'''
 				try:
 					db.query_db(query)
 				except:
 					error = "album già esistente"
 					return render_template('error.html', error = error)
-
+				'''
 				query = """
 				SELECT id_album
 				FROM album
