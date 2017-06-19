@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not other %}
+    <div class = "row">
+        <div class="panel panel-default col-sm-12">
+            <div class="panel-body">
+                <div class="row">
+                    <h1 align = "center"> Benvenuto nel tuo profilo {{username}}! </h1>
+                    <div class="col-xs-6 col-md-3">
+                        <div class="thumbnail">
+                            <img src="{{profile_pic}}">
+                            <div class="caption">
+                                <h4 align ="center">Cambia la tua immagine profilo!</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 align = "left">
+                        Name: {{name}}<br>
+                        Surname: {{surname}}<br>
+                        Email: {{email}}<br>
+                        Numero recensioni: {{review_num}}<br>
+                        Genere preferito: {{fav_genre}}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h1 align="center">I tuoi album preferiti</h1>
+            <div class="row">
+                {% for i in range (fav_albums|length)%}
+                    <div class="col-xs-6 col-md-3">
+                        <a href="/artist/{{ fav_albums[i].artist }}/{{ fav_albums[i].name }}/{{fav_albums[i].id_itunes}}" class="thumbnail">
+                            <img src="{{fav_albums[i].path}}" alt="...">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% else %}
+    <div class="panel panel-default col-sm-12">
+        <div class="panel-body">
+            <div class="row">
+                <h1 align = "center"> Benvenuto nel profilo di {{username}}! </h1>
+                <div class="col-xs-6 col-md-3">
+                    <div class="thumbnail">
+                        <img src="{{profile_pic}}">
+                    </div>
+                </div>
+                <h3 align = "left">
+                    Numero recensioni: {{review_num}}<br>
+                    Genere preferito: {{fav_genre}}
+                </h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h1 align="center">Album preferiti</h1>
+            <div class="row">
+                {% for i in range (fav_albums|length)%}
+                    <div class="col-xs-6 col-md-3">
+                        <a href="/artist/{{ fav_albums[i].artist }}/{{ fav_albums[i].name }}/{{fav_albums[i].id_itunes}}" class="thumbnail">
+                            <img src="{{fav_albums[i].path}}" alt="...">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

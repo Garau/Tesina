@@ -13,7 +13,7 @@ db =  utils.pysqlite3()
 
 def review(request, session, artist_name, album_name, album_id):
 	if 'username' not in session:
-		return render_template("review.html", artist_name = artist_name, album_name = album_name, album_id = album_id, logged = False)
+		return render_template("review.html", artist_name = artist_name, album_name = album_name, album_id = album_id)
 	else:
 		if 'title' not in request.form:
 			query = """SELECT AVG(recensione.voto), album.id_album
@@ -124,7 +124,7 @@ def review(request, session, artist_name, album_name, album_id):
 			time = datetime.datetime.now()
 			query = """
 			INSERT INTO recensione
-			VALUES ({},{},'{}','{}',{}, '{}')
+			VALUES (NULL, {},{},'{}','{}',{}, '{}')
 			""".format(id_album, id_utente, titolo, testo, voto, time)
 			print (query)
 

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if logged %}
+{% if session['username'] %}
 	<div class = "row">
 		<div class="panel panel-default col-sm-8">
 	        <div class="panel-body" style="height:180px">  

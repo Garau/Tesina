@@ -5,7 +5,7 @@ from flask import render_template
 
 db =  utils.pysqlite3()
 
-def login(request, session):
+def login(request, session, source = None):
 	if 'username' not in request.form:
 		return render_template('login.html', flag = False)
 	else:

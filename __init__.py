@@ -4,6 +4,8 @@ from flask import Flask
 from flask import render_template
 from flask import session
 from flask import request
+from flask import redirect
+from flask import url_for
 
 
 from backend.home import home
@@ -14,6 +16,7 @@ from backend.search import search
 from backend.artist import artist
 from backend.review import review
 from backend.view_review import view_review
+from backend.profile import profile
 
 app = Flask(__name__)
 
@@ -62,6 +65,15 @@ def route_view_review(username, artist_name, album_name, album_id):
     return view_review(request,session,username,artist_name,album_name,album_id)
 
 @app.route('/profile/<username>', methods = ['GET', 'POST'])
+def route_profile(username):
+    return profile(request, session, username)
+
+@app.route('/profile', methods = ['GET', 'POST'])
+def route_profile_not_user():
+    if 'username' in session:
+        return redirect(url_for('route_profile', username = session['username']))
+    else:
+        return redirect(url_for('route_login'))
 
 @app.route('/charts')
 def charts():
@@ -70,10 +82,6 @@ def charts():
 @app.route('/genres')
 def genres():
     return render_template('genres.html')
-
-@app.route('/profile')
-def profile():
-	return render_template('profile.html')
 
 @app.route('/logout')
 def route_logout():

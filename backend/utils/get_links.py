@@ -285,3 +285,11 @@ print (result['feed'].keys())
 print ("--------------")
 print (result['feed']['results'][0].keys())
 '''
+
+'''
+Cosa manca:
+1_cambiare impostazioni del profilo
+2_aggiungere commenti alle recensione
+3_ricerca per genere
+4_ricerca per artista
+'''
