@@ -31,11 +31,15 @@ def view_review(request, session, username, artist_name, album_name, album_id):
 	review_id = result[0][3]
 
 	if 'content' in request.form:
-		query = """
-		INSERT INTO commento
-		VALUES (NULL, '{}', {}, {})
-		""".format(request.form['content'], review_id, session['user_id'])
-		db.query_db(query)
+		if 'user_id' in session:
+			time = datetime.datetime.now()
+			query = """
+			INSERT INTO commento
+			VALUES (NULL, '{}', {}, {}, '{}')
+			""".format(request.form['content'], review_id, session['user_id'], time)
+			db.query_db(query)
+		else:
+			return redirect(url_for('route_login'))
 
 	query = """SELECT AVG(recensione.voto)
 		FROM album, recensione
@@ -66,9 +70,9 @@ def get_comments(id_itunes):
 	WHERE utente.id_utente = inn.id_utente
 	""".format(username)'''
 	query = """
-	SELECT inn.testo, inn.id_utente, utente.immagine, utente.username
+	SELECT inn.testo, inn.id_utente, utente.immagine, utente.username, inn.data
 	FROM(
-	SELECT commento.id_commento, commento.testo, commento.id_utente
+	SELECT commento.id_commento, commento.testo, commento.id_utente, commento.data
 	FROM commento, recensione, utente, album
 	WHERE commento.id_recensione = recensione.id_recensione
 	AND recensione.id_utente = utente.id_utente
@@ -76,12 +80,13 @@ def get_comments(id_itunes):
 	AND album.id_itunes = {}
 	) as inn, utente
 	WHERE utente.id_utente = inn.id_utente
+	ORDER BY inn.data ASC
 	""".format(id_itunes)
 
 	result = db.query_db(query)
 	if result:
 		for line in result:
-			comments.append({'text': line[0], 'profile_pic': line[2], 'author': line[3]})
+			comments.append({'text': line[0], 'profile_pic': line[2], 'author': line[3], 'date': line[4]})
 	else:
 		comments= None
 

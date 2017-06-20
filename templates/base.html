@@ -47,20 +47,20 @@
             <nav class="navbar navbar-default bg-default">
                 <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                    <a class="navbar-brand" href="/">&nbsp Reviews &nbsp&nbsp&nbsp</a>
-                    <a class="navbar-brand" href="/charts">Charts &nbsp&nbsp&nbsp</a>
-                    <a class="navbar-brand" href="/genres">Genres &nbsp&nbsp&nbsp</a>
-                    <a class="navbar-brand" href="/profile">Profile &nbsp&nbsp&nbsp</a>
+                    <a class="navbar-brand" href="/">&nbsp Recensioni &nbsp&nbsp&nbsp</a>
+                    <a class="navbar-brand" href="/search">Cerca &nbsp&nbsp&nbsp</a>
+                    <a class="navbar-brand" href="/genres">Generi &nbsp&nbsp&nbsp</a>
+                    <a class="navbar-brand" href="/profile">Profilo &nbsp&nbsp&nbsp</a>
                     {% if session %}
-                        <a class="navbar-brand" href="/logout">Logout</a>
+                        <a class="navbar-brand" href="/logout">Esci</a>
                     {% else %}
-                        <a class="navbar-brand" href="/login">Login &nbsp&nbsp&nbsp</a>
-                        <a class="navbar-brand" href="/signup">Signup</a>
+                        <a class="navbar-brand" href="/login">Accedi &nbsp&nbsp&nbsp</a>
+                        <a class="navbar-brand" href="/signup">Registrati</a>
                     {% endif %}
                     <ul class = "nav navbar-nav navbar-right">
                         <form class="navbar-form" role="search" action = "/search" method = "POST">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Search" name="search_key">
+                                <input type="text" class="form-control" placeholder="Cerca un album!" name="search_key">
                             </div>
                             <button type="submit" class="btn btn-default">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true">
@@ -78,5 +78,5 @@
     {% block script %}
     
     {% endblock %}
-    <script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
+    <!--script src="{{url_for('static', filename='bootstrap.min.js')}}"></script-->
 </body>

@@ -62,7 +62,7 @@
 								    	</a>
 								  	</div>
 								  	<div class="media-body">
-								    	<h3 class="media-heading">{{ comment.author }}:</h3>
+								    	<h3 class="media-heading">{{ comment.author }} ({{comment.date}}):</h3>
 								    	<h4>{{ comment.text }}</h4>
 								  	</div>
 								</div>
@@ -76,7 +76,7 @@
                     <div class="panel-body">
                     	<form action = "/review/{{username}}/{{artist_name}}/{{album_name}}/{{album_id}}" method = "POST">
 	                    	<h4><label for="content">Scrivi un commento!</label></h4>
-							<textarea class="form-control" rows="8" name = "content"></textarea>
+							<textarea class="form-control" rows="8" name = "content"></textarea><br>
 							<button type="submit" class="btn btn-primary btn-lg">Confirm!</button>
                     	</form>
                     </div>

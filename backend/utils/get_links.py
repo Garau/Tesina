@@ -2,6 +2,9 @@ import json
 import urllib.request
 import datetime
 
+from datetime import timedelta
+from datetime import datetime
+
 def get_album_art_small(album_name):
 	album_name = album_name.replace(" ", "%20")
 	url_albums = "https://itunes.apple.com/search?term={}&media=music&entity=album&country=US&limit=1".format(album_name)
@@ -293,3 +296,24 @@ Cosa manca:
 3_ricerca per genere
 4_ricerca per artista
 '''
+
+old_time = "2017-06-20 11:36:30.102976"
+new_time = "2017-06-20 11:37:04.924103"
+
+#print (timedelta(old_time - new_time))
+
+dt1 = datetime.strptime(old_time, "%Y-%m-%d %H:%M:%S.%f")
+dt2 = datetime.strptime(new_time, "%Y-%m-%d %H:%M:%S.%f")
+
+delta = dt2 - dt1
+
+seconds  = str(delta.seconds)
+minutes = str(int(delta.seconds/60))
+hours = str(int(int(minutes)/60))
+days = str(delta.days)
+
+print ("Seconds: " + seconds)
+print ("Minutes: " + minutes)
+print ("Hours: " + hours)
+print ("Days: " + days)
+#print ("Months: " + str(delta.minutes))

@@ -8,9 +8,9 @@ def signup(request, session):
 		return render_template('signup.html', flag = False)
 	else:	
 		print ("dati inseriti")	
-		username = request.form['username']
-		first_name = request.form['first_name']
-		second_name = request.form['second_name']
+		username = request.form['username'].title()
+		first_name = request.form['first_name'].title()
+		second_name = request.form['second_name'].title()
 		password = request.form['password']
 		confirm_password = request.form['confirm_password']
 		email = request.form['email']
