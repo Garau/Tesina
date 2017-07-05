@@ -12,8 +12,8 @@
                     </a>
                 </div>
                 <div class="media-body media-middle">
-                    <h1 class="media-heading" style = "width: 100%" align="center">Grazie {{username}} per la tua fantastica recensione!</h1>
-                    <h2 style = "width: 100%" align="center">I love you <3 </h2>
+                    <h1 class="media-heading" style = "width: 100%" align="center">{{username}} la tua recensione è stata pubblicata!</h1>
+                    <h2 style = "width: 100%" align="center">Grazie <3 </h2>
                 </div>
             </div>
         </div>
@@ -26,11 +26,12 @@
         <div class="panel panel-default col-sm-12">
             <div class="panel-body">
                 <h1 align="center">Album più votati</h1>
-                <div class="row">
+                <div class="row" style = "display: -webkit-flex; display: flex;">
                     {% for n in range(4)%}
-                    <div class="col-xs-6 col-md-3">
-                        <div class="thumbnail">
-                            <a href="/artist/{{ image[n].artist }}/{{ image[n].name }}/{{image[n].id}}">
+                    <div class="col-xs-6 col-md-3" style = "display: -webkit-flex; display: flex;">
+                        <!-- #201e4c  ad3030-->
+                        <div class="thumbnail" style="background: #cccccc">
+                            <a href="/album/{{ image[n].artist }}/{{ image[n].name }}/{{image[n].id}}">
                                 <img src="{{image[n].path}}">
                             </a>
                             <div class="caption">
@@ -51,7 +52,7 @@
                 <bold><h2 align = "center">Ultime recensioni</h2></bold><br>
                 {% for n in range(image2|length) %}
                     <a href ="/review/{{image2[n].author}}/{{image2[n].artist}}/{{image2[n].name}}/{{image2[n].id}}">
-                        <div class="panel panel-default col-sm-12">
+                        <div class="panel panel-default col-sm-12" style = "background: #cccccc">
                             <div class="panel-body">
                                 <div class="media-left media-middle">
                                     <img class="media-object" src="{{ image2[n].path }}" height="75" width="75">  
@@ -86,8 +87,8 @@
                         </div>
                     </div>
                     <br-->
-                    <a href ="/artist/{{image3[n].artist}}/{{ image3[n].name }}/{{image3[n].id}}">
-                        <div class="panel panel-default col-sm-12">
+                    <a href ="/album/{{image3[n].artist}}/{{ image3[n].name }}/{{image3[n].id}}">
+                        <div class="panel panel-default col-sm-12" style = "background: #cccccc">
                             <div class="panel-body">
                                 <div class="media-left media-middle">
                                     <img class="media-object" src="{{ image3[n].path }}" height="75" width="75">  
@@ -112,7 +113,7 @@
                 <h2 align = "center">Ultimi commenti</h2><br>
                 {% for n in range(0, comments|length) %}
                     <a href="/review/{{comments[n].review_author}}/{{comments[n].artist}}/{{comments[n].album_name}}/{{comments[n].id}}">
-                        <div class="panel panel-default col-sm-12">
+                        <div class="panel panel-default col-sm-12" style = "background: #cccccc">
                             <div class="panel-body">
                                 <h4 style = "width: 100%; color: #333333; text-decoration: none;">
                                     {{comments[n].author}}: <br>

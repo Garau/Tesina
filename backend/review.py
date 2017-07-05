@@ -40,7 +40,7 @@ def review(request, session, artist_name, album_name, album_id):
 
 			#check if artist exists4
 
-			url_albums = "https://itunes.apple.com/lookup?id={}&format=json".format(album_id)
+			url_albums = "https://itunes.apple.com/lookup?id={}&format=json&country=IT".format(album_id)
 			result_albums = urllib.request.urlopen(url_albums)
 			result_albums = json.loads(result_albums.read())
 
@@ -63,7 +63,7 @@ def review(request, session, artist_name, album_name, album_id):
 				query = """
 				INSERT INTO artista
 				VALUES (NULL, '{}','{}',{})
-				""".format(name, genre, artist_id)
+				""".format(name.replace("'", "''"), genre.replace("'", "''"), artist_id)
 				try:
 					db.query_db(query)
 				except:
@@ -74,14 +74,19 @@ def review(request, session, artist_name, album_name, album_id):
 				id_album = session['album_id']
 			else:
 				#insert into album and composizione
-				url_albums = "https://itunes.apple.com/lookup?id={}&format=json".format(album_id)
+				url_albums = "https://itunes.apple.com/lookup?id={}&format=json&country=IT".format(album_id)
 				result_albums = urllib.request.urlopen(url_albums)
 				result_albums = json.loads(result_albums.read())
 
 				releaseDate = result_albums['results'][0]['releaseDate'][:10]
 				genre = result_albums['results'][0]['primaryGenreName']
+				print (album_name)
+				album_name = album_name.replace("'", "''")
+				print (album_name)
 
-				query = "INSERT INTO album VALUES (NULL, '{}', '{}', '{}', {})".format(album_name, genre, releaseDate, album_id)
+				query = """INSERT INTO album 
+				VALUES (NULL, '{}', '{}', '{}', {})
+				""".format(album_name.replace("'", "''"), genre.replace("'", "''"), releaseDate, album_id)
 
 				print (query)
 				db.query_db(query)
@@ -125,7 +130,7 @@ def review(request, session, artist_name, album_name, album_id):
 			query = """
 			INSERT INTO recensione
 			VALUES (NULL, {},{},'{}','{}',{}, '{}')
-			""".format(id_album, id_utente, titolo, testo, voto, time)
+			""".format(id_album, id_utente, titolo.replace("'", "''"), testo.replace("'", "''"), voto, time)
 			print (query)
 
 			try:

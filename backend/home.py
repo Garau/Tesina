@@ -19,12 +19,12 @@ def home(request, session):
 	
 
 	image = get_top_albums(4)
-	image2 = latest_reviews(9)
+	image2 = get_latest_reviews(9)
 	image3 = links.get_new_albums(9)
-	comments = get_last_comments(5)
+	comments = get_latest_comments(9)
 
 	if 'username' not in session:
-		return render_template('home.html', image=image, image2 = image2, image3 = image3, image4 = image4)
+		return render_template('home.html', image=image, image2 = image2, image3 = image3, comments = comments)
 	else:
 		if 'rating' in session:
 			album_path = session['album_path']
@@ -68,7 +68,7 @@ def get_top_albums(num, size = None):
 
 	return final
 
-def latest_reviews(num):
+def get_latest_reviews(num):
 	albums = []
 	paths = []
 	final = []
@@ -96,7 +96,7 @@ def latest_reviews(num):
 
 	return final
 
-def get_last_comments(num):
+def get_latest_comments(num):
 	comments = []
 	query = """
 	SELECT inn.data, inn.nome, inn.username as author, inn.id_itunes, inn.titolo, utente.nome, inn.artista
@@ -109,7 +109,7 @@ def get_last_comments(num):
 		AND composizione.id_album = album.id_album
 		AND composizione.id_artista = artista.id_artista
 		GROUP BY commento.id_recensione
-		ORDER BY commento.data
+		ORDER BY commento.data DESC
 		LIMIT {}
 	) as inn, utente, commento
 	WHERE commento.id_utente = utente.id_utente

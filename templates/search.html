@@ -2,46 +2,158 @@
 
 {% block content %}
 
+	<div class = "row">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class = "row">
+					<h3>&nbsp&nbsp Cerca qualcosa!</h3>
+				</div>
+				<div class = "row">
+					<form action = "/search" method = "POST">
+						<div class="col-sm-4">
+							<input class="form-control" id="search_key" type="text" name="search_key">
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<select class="form-control" id="sel1" name="kind">
+									<option>Artista</option>
+									<option>Album</option>
+									<option>Canzone</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<button type="submit" class="btn btn-primary">Cerca!</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+{% if kind %}
 <div class="panel panel-default">
     <div class="panel-body">
-    {% set count = 0 %}
-    {% set length = (dict_albums|length/2)|int %}
-    {% for count in range(dict_albums|length) %}
-    	{% set count = count * 2 %}
-    	{% if count < dict_albums|length %}
-	    	<div class="media col-sm-12">
-	    		<div class="row">
-	    		{% if dict_albums[count] %}
-				  	<div class="media-left media-middle">
-				    	<a href="/artist/{{dict_albums[count].artist}}/{{dict_albums[count].name}}/{{dict_albums[count].id}}">
-				      		<img class="media-object" 
-				      		src="{{dict_albums[count].path}}"
-						    height="100" width="100">
-				    	</a>
+    {% if kind == 'album' %}
+	    {% set count = 0 %}
+	    {% set length = (dict_results|length/2)|int %}
+	    {% for count in range(dict_results|length) %}
+	    	{% set count = count * 2 %}
+	    	{% if count < dict_results|length %}
+		    	<div class="media col-sm-12">
+		    		<div class="row">
+		    		{% if dict_results[count] %}
+					  	<div class="media-left media-middle">
+					    	<a href="/album/{{dict_results[count].artist}}/{{dict_results[count].name}}/{{dict_results[count].id}}">
+					      		<img class="media-object" 
+					      		src="{{dict_results[count].path}}"
+							    height="100" width="100">
+					    	</a>
+					  	</div>
+					  	<div class="media-body media-middle">
+					    	<h3 class="media-heading" style = "width: 400px">{{dict_results[count].name}}</h3>
+					    	<h4 style = "width: 400px">{{dict_results[count].artist}}</h4>
+					  	</div>
+					{% endif %}
+				  	{% set count = count + 1 %}
+			    	{% if dict_results[count] %}
+			            <div class="media-left media-middle" style = "width: 100%; color: #333333; text-decoration: none;">
+					    	<a href="/album/{{dict_results[count].artist}}/{{dict_results[count].name}}/{{dict_results[count].id}}">
+					      		<img class="media-object"
+					      		src="{{dict_results[count].path}}" 
+					      		height="100" width="100">
+					    	</a>
+					  	</div>
+					  	<div class="media-body media-middle">
+					    	<h3 class="media-heading" style = "width: 400px">{{dict_results[count].name}}</h3>
+					    	<h4 style = "width: 400px">{{dict_results[count].artist}}</h4>
+					  	</div>
+				  	{% endif %}
 				  	</div>
-				  	<div class="media-body media-middle">
-				    	<h3 class="media-heading" style = "width: 400px">{{dict_albums[count].name}}</h3>
-				    	<h4 style = "width: 400px">{{dict_albums[count].artist}}</h4>
+		        </div>
+		    {% endif %}
+	    {% endfor %}
+	{% elif kind == 'artist' %}
+	    {% for count in range(dict_results|length) %}
+    		<div class = "row">
+		    	<div class="media col-sm-12">
+		    		<a href = "/artist/{{dict_results[count].artist}}/{{dict_results[count].id}}">
+		    			<div class="panel panel-default col-sm-12" style = "background: #cccccc">
+							<div class="panel-body" style = "width: 100%; color: #333333; text-decoration: none;">
+	                            <div class="col-sm-4">
+									<h3><b>{{dict_results[count].artist}}</b></h3>
+								</div>
+								<div class="col-sm-6">
+								</div>
+								<div class="col-sm-2">
+	                                <h3><b>{{dict_results[count].genre}}</b></h3>
+	                            </div>
+	                            <div class="col-sm-12">
+	                            	<h4><b>Canzoni famose</b></h4>
+	                            	{% if songs[count] %}
+		                            	{% if songs[count][0] %}
+			                            	{% for n in range(0,5) %}
+			                            		{{songs[count][n]}}
+			                            		{% if n != 4%}
+			                            			,&nbsp
+			                            		{% endif %}
+			                            	{% endfor %}
+			                            {% else %}
+			                            	Nessuna canzone disponibile
+			                            {% endif %}
+			                        {% else %}
+			                        	Nessuna canzone disponibile
+			                        {% endif %}
+	                            </div>
+							</div>
+						</div>
+					</a>
+		        </div>
+		    </div>
+	    {% endfor %}
+	{% elif kind == 'song' %}
+		{% set count = 0 %}
+	    {% set length = (dict_results|length/2)|int %}
+	    {% for count in range(dict_results|length) %}
+	    	{% set count = count * 2 %}
+	    	{% if count < dict_results|length %}
+		    	<div class="media col-sm-12">
+		    		<div class="row">
+		    		{% if dict_results[count] %}
+					  	<div class="media-left media-middle">
+					    	<a href="/album/{{dict_results[count].artistName}}/{{dict_results[count].collectionName}}/{{dict_results[count].collectionId}}">
+					      		<img class="media-object" 
+					      		src="{{dict_results[count].image}}"
+							    height="100" width="100">
+					    	</a>
+					  	</div>
+					  	<div class="media-body media-middle">
+					    	<h3 class="media-heading" style = "width: 400px"><b>{{dict_results[count].trackName}}</b>({{dict_results[count].artistName}})</h3>
+					    	<h4 style = "width: 400px">{{dict_results[count].collectionName}}</h4>
+					  	</div>
+					{% endif %}
+				  	{% set count = count + 1 %}
+			    	{% if dict_results[count] %}
+			            <div class="media-left media-middle">
+					    	<a href="/album/{{dict_results[count].artistName}}/{{dict_results[count].collectionName}}/{{dict_results[count].collectionId}}">
+					      		<img class="media-object" 
+					      		src="{{dict_results[count].image}}"
+							    height="100" width="100">
+					    	</a>
+					  	</div>
+					  	<div class="media-body media-middle">
+					    	<h3 class="media-heading" style = "width: 400px"><b>{{dict_results[count].trackName}}</b>({{dict_results[count].artistName}})</h3>
+					    	<h4 style = "width: 400px">{{dict_results[count].collectionName}}</h4>
+					  	</div>
+				  	{% endif %}
 				  	</div>
-				{% endif %}
-			  	{% set count = count + 1 %}
-		    	{% if dict_albums[count] %}
-		            <div class="media-left media-middle">
-				    	<a href="/artist/{{dict_albums[count].artist}}/{{dict_albums[count].name}}/{{dict_albums[count].id}}">
-				      		<img class="media-object"
-				      		src="{{dict_albums[count].path}}" 
-				      		height="100" width="100">
-				    	</a>
-				  	</div>
-				  	<div class="media-body media-middle">
-				    	<h3 class="media-heading" style = "width: 400px">{{dict_albums[count].name}}</h3>
-				    	<h4 style = "width: 400px">{{dict_albums[count].artist}}</h4>
-				  	</div>
-			  	{% endif %}
-			  	</div>
-	        </div>
-	    {% endif %}
-    {% endfor %}
+		        </div>
+		    {% endif %}
+	    {% endfor %}
+	{% endif %}
+	{% if not dict_results %}
+		La ricerca non ha prodotto risultati
+	{% endif %}
     </div>
 </div>
+{% endif %}
 {% endblock %}

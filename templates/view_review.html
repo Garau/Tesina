@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<div class = "row">
+	<div class = "row" style = "display: -webkit-flex; display: flex;">
 		<div class="panel panel-default col-sm-8">
-	        <div class="panel-body" style="height:180px">  
+	        <div class="panel-body">  
 	            <div class="media-left media-middle">
 			    	<a>
 			      		<img class="media-object" 
@@ -12,24 +12,24 @@
 			    	</a>
 			  	</div>
 			  	<div class="media-body media-middle">
-			    	<h1 class="media-heading" style = "width: 100%" align="center">{{username}}'s review of </h1>
-			    	<h2 style = "width: 100%" align="center">{{album_name}} by {{artist_name}}</h2>
+			    	<h1 class="media-heading" style = "width: 100%" align="center">Recensione di {{username}}</h1>
+			    	<h2 style = "width: 100%" align="center">{{album_name}} di {{artist_name}}</h2>
 			  	</div>
 	        </div>
 	    </div>
 
 	    <div class="panel panel-default col-sm-4">
-	        <div class="panel-body" style="height:180px">  
+	        <div class="panel-body">  
 	        	<br>
 	        	{% if rating %}
-	        		<h2><p align="center"> Average rating </p></h2>
+	        		<h2><p align="center"> Voto medio </p></h2>
 		        	<div class="progress" style = "height: 35px;">
 						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{rating * 10}}%; min-width: 2em;">
 							<h4>{{rating}}</h4>
 						</div>
 					</div>
 				{% else %}
-					<h2><p align="center"> Nessuna recensione yet </p></h2>
+					<h2><p align="center"> Nessuna recensione </p></h2>
 				{% endif %}
 	        </div>
 	    </div>
@@ -37,7 +37,7 @@
 	<div class="row">
 		<div class="panel panel-default col-sm-12">
 	        <div class="panel-body">  
-		        <h1>{{title}} - Rating: {{user_rating}}</h1>
+		        <h1>{{title}} - Voto: {{user_rating}}</h1>
 		        <br>
 	        	<h4>
 		        	{% for line in content.splitlines() %}
@@ -53,7 +53,7 @@
 	            <bold><h2 align = "center">Commenti</h2></bold><br>
 	            {% if comments %}
 	            	{% for comment in comments %}
-	                    <div class="panel panel-default col-sm-12">
+	                    <div class="panel panel-default col-sm-12" style = "background: #cccccc">
 	                        <div class="panel-body">
 			                    <div class="media">
 								  	<div class="media-left media-top">

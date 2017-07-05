@@ -55,7 +55,7 @@ def view_review(request, session, username, artist_name, album_name, album_id):
 
 	return render_template('view_review.html', username=username, artist_name=artist_name, album_name=album_name, album_id = album_id, album_path=album_path, rating = rating, title = title, content = content, user_rating = user_rating, comments = comments)
 
-def get_comments(id_itunes):
+def get_comments(id_itunes, username = None):
 	comments = []
 	'''
 	query = """
@@ -86,7 +86,7 @@ def get_comments(id_itunes):
 	result = db.query_db(query)
 	if result:
 		for line in result:
-			comments.append({'text': line[0], 'profile_pic': line[2], 'author': line[3], 'date': line[4]})
+			comments.append({'text': line[0], 'profile_pic': line[2], 'author': line[3], 'date': links.return_ago(line[4])})
 	else:
 		comments= None
 

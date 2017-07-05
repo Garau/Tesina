@@ -10,7 +10,7 @@
                     {% if artist_path %}
                         <img src="{{artist_path}}" alt="...">
                     {% else %}
-                        <img src="None" alt="...">
+                        <img src="None" alt="https://pbs.twimg.com/profile_images/600060188872155136/st4Sp6Aw.jpg">
                     {% endif %}
                 </a>
                 <!--h2 align="center">Tracklist</h2-->
@@ -32,18 +32,23 @@
             <h2 align="center">Tracklist</h2>
         </div>
     </div> -->
+    
     <div class="panel panel-default">
         <div class="panel-body">
-            <h1 align="center">Most popular albums</h1>
-            <div class="row">
-                {% for i in range (top_albums|length)%}
-                    <div class="col-xs-6 col-md-3">
-                        <a href="/artist/{{ top_albums[i].artist }}/{{ top_albums[i].name }}" class="thumbnail">
-                            <img src="{{top_albums[i].path}}" alt="...">
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
+            {% if top_albums %}
+                <h1 align="center">Album</h1>
+                <div class="row">           
+                    {% for i in range (top_albums|length)%}
+                        <div class="col-xs-6 col-md-3">
+                            <a href="/album/{{ top_albums[i].artist }}/{{ top_albums[i].name }}/{{ top_albums[i].id}}" class="thumbnail">
+                                <img src="{{top_albums[i].path}}" alt="...">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <h1 align="center">Nessun album disponibile</h1>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

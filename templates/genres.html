@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	<div class = "row">
+        <div class="panel panel-default ">
+            <div class="panel-body">
+                <h1 align="center"> Genres </h1>
+                <div class = "col-md-12">
+                    {% set count = 0 %}
+        		    {% set length = (genres|length/2)|int %}
+        		    {% for count in range(genres|length) %}
+        		    	{% set count = count * 3 %}
+        		    	{% if count < genres|length %}
+        			    	<div class="media col-sm-12">
+        			    		<div class="row">
+        			    		{% if genres[count] %}
+        			    			<div class="panel panel-default col-sm-4">
+            							<div class="panel-body">
+            								<!--p align="center"></p-->
+                                            {{genres[count].name}}
+            							</div>
+            						</div>
+        						{% endif %}
+        					  	{% set count = count + 1 %}
+        				    	{% if genres[count] %}
+        						  	<div class="panel panel-default col-sm-4">
+            							<div class="panel-body">
+            								{{genres[count].name}}
+            							</div>
+            						</div>
+        						{% endif %}
+        						{% set count = count + 1 %}
+        				    	{% if genres[count] %}
+        						  	<div class="panel panel-default col-sm-4">
+            							<div class="panel-body">
+            								{{genres[count].name}}
+            							</div>
+            						</div>
+        						{% endif %}
+        					  	</div>
+        			        </div>
+        			    {% endif %}
+        		    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

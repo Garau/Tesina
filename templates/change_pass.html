@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+	{% if msg %}
+		<div class="panel panel-default col-sm-4 col-sm-offset-4">
+	  		<div class="panel-body">
+	  			{{msg}}
+	  		</div>
+	  	</div>
+	{% endif %}
+	{% if flag == false %}
+		<div class="panel panel-default col-sm-4 col-sm-offset-4">
+		  	<div class="panel-body">
+		    	<form action="/profile/{{username}}/password" method="POST">
+		    		<div class="form-group">
+					    <label for="vecchia_password">Password</label>
+					    <input type="password" class="form-control" id="vecchia_password" placeholder="Vecchia Password" name="vecchia_password">
+				  	</div>
+				  	<div class="form-group">
+					    <label for="nuova_password">Nuova Password</label>
+					    <input type="password" class="form-control" id="nuova_password" placeholder="Nuova Password" name="nuova_password">
+				  	</div>
+				  	<div class="form-group">
+					    <label for="conferma_nuova_password">Conferma Nuova Password</label>
+					    <input type="password" class="form-control" id="conferma_nuova_password" placeholder="Conferma Nuova Password" name="conferma_nuova_password">
+				  	</div>
+				  	<div style="height: 10px;"></div>
+				  	<button type="submit" class="btn btn-primary">Conferma</button>
+				</form>
+		  	</div>
+		</div>
+	{% else %}
+		<div class="panel panel-default col-sm-4 col-sm-offset-4">
+	  		<div class="panel-body">
+	  			La password è stata modificata con successo!
+	  		</div>
+	  	</div>
+	{% endif %}
+{% endblock %}

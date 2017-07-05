@@ -10,23 +10,44 @@
 	  	</div>
 	{% endif %}
 	-->
-	{% if flag == false %}
-	<div class="panel panel-default col-sm-4 col-sm-offset-4">
-	  	<div class="panel-body">
-	    	<form action="/login" method="POST">
-			  	<div class="form-group">
-				    <label for="username">Username</label>
-				    <input type="text" class="form-control" id="username" placeholder="Username" name="username">
-			  	</div>
-			  	<div class="form-group">
-				    <label for="password">Password</label>
-				    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-			  	</div>
-			  	<div style="height: 10px;"></div>
-			  	<button type="submit" class="btn btn-default">Submit</button>
-			</form>
+	{% if msg %}
+		<div class="panel panel-default col-sm-4 col-sm-offset-4">
+	  		<div class="panel-body">
+	  			Devi accedere prima di visualizzare il tuo profilo!
+	  		</div>
 	  	</div>
-	</div>
+	{% endif %}
+	{% if confirm_profile %}
+		<div class="panel panel-default col-sm-4 col-sm-offset-4">
+	  		<div class="panel-body">
+	  			Il tuo account è stato verificato, ora puoi accedere!
+	  		</div>
+	  	</div>
+	{% endif %}
+	{% if flag == false %}
+		{% if error %}
+			<div class="panel panel-default col-sm-4 col-sm-offset-4">
+		  		<div class="panel-body">
+		  			{{ error }}
+		  		</div>
+		  	</div>
+		{% endif %}
+		<div class="panel panel-default col-sm-4 col-sm-offset-4">
+		  	<div class="panel-body">
+		    	<form action="/login" method="POST">
+				  	<div class="form-group">
+					    <label for="username">Username</label>
+					    <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+				  	</div>
+				  	<div class="form-group">
+					    <label for="password">Password</label>
+					    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+				  	</div>
+				  	<div style="height: 10px;"></div>
+				  	<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+		  	</div>
+		</div>
 	{% else %}
 		<div class="panel panel-default col-sm-4 col-sm-offset-4">
 	  		<div class="panel-body">
